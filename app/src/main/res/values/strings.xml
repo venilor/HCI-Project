@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">HCI_Project</string>
+    <string-array name="mood_array">
+        <item>Happy</item>
+        <item>Victorious</item>
+        <item>Magnificent</item>
+        <item>Sad</item>
+        <item>Brooding</item>
+        <item>Melancholy</item>
+    </string-array>
 </resources>

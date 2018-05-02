@@ -1,6 +1,5 @@
 package com.example.somebody.hci_project;
 
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -9,12 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class MoodPage extends AppCompatActivity {
 
     private MediaPlayer mp;
+    public String currentSound = "";
+    public boolean isPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,28 +23,107 @@ public class MoodPage extends AppCompatActivity {
         view.setBackgroundColor(Color.GRAY);
 
 
-        Button one = (Button) this.findViewById(R.id.BIGMOOD);
+        Button playB = (Button) this.findViewById(R.id.playButton);
 
-
-        final AssetFileDescriptor file = this.getResources().openRawResourceFd(R.raw.arrow);
-
-        one.setOnClickListener(new View.OnClickListener(){
+        playB.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
                 stopPlaying();
-                mp = MediaPlayer.create(MoodPage.this, R.raw.arrow);
-                mp.start();
-                mp.setLooping(true);
+                int tempi;
+
+                switch(currentSound){
+                    case "Victorious":
+                        tempi = R.raw.victorious;
+                        break;
+                    case "Magnificent":
+                        tempi = R.raw.magnificent;
+                        break;
+                    case "Sad":
+                        tempi = R.raw.sad;
+                        break;
+                    case "Brooding":
+                        tempi = R.raw.brooding;
+                        break;
+                    case "Melancholy":
+                        tempi = R.raw.melancholy;
+                        break;
+                    default:
+                        tempi = R.raw.happy;
+                        break;
+                }
+
+                mp = MediaPlayer.create(MoodPage.this, tempi);
+                if(!isPlaying){
+                    mp.setVolume(100f, 100f);
+                    mp.start();
+                    mp.setLooping(true);
+                }
+                isPlaying = true;
             }
         });
 
-        Button two = (Button) this.findViewById(R.id.SMOLMOOD);
+        Button stopB = (Button) this.findViewById(R.id.stopButton);
 
-        two.setOnClickListener(new View.OnClickListener() {
+        stopB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopPlaying();
                 mp = MediaPlayer.create(MoodPage.this, R.raw.arrow);
                 mp.stop();
+                isPlaying = false;
+            }
+        });
+
+        Button happyB = (Button) this.findViewById(R.id.happyButton);
+
+        happyB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Happy";
+                view.setBackgroundColor(Color.YELLOW);
+            }
+        });
+
+        Button vicB = (Button) this.findViewById(R.id.vicButton);
+
+        vicB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Victorious";
+                view.setBackgroundColor(Color.GREEN);
+            }
+        });
+
+        Button magB = (Button) this.findViewById(R.id.magButton);
+
+        magB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Magnificent";
+                view.setBackgroundColor(Color.RED);
+            }
+        });
+
+        Button sadB = (Button) this.findViewById(R.id.sadButton);
+
+        sadB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Sad";
+                view.setBackgroundColor(Color.BLUE);
+            }
+        });
+
+        Button broodB = (Button) this.findViewById(R.id.broodButton);
+
+        broodB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Brooding";
+                view.setBackgroundColor(Color.GRAY);
+            }
+        });
+
+        Button melB = (Button) this.findViewById(R.id.melButton);
+
+        melB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                currentSound = "Melancholy";
+                view.setBackgroundColor(Color.parseColor("#800080"));
             }
         });
 
